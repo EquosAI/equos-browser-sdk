@@ -2,12 +2,40 @@
   "name": "equos-browser-sdk",
   "version": "1.0.0",
   "description": "Equos browser sdk",
+  "keywords": [
+    "ai",
+    "avatar",
+    "livekit",
+    "sdk",
+    "equos.ai",
+    "equos",
+    "react",
+    "elevenlabs",
+    "realtime",
+    "agent",
+    "webrtc",
+    "browser",
+    "openai",
+    "gemini"
+  ],
+  "homepage": "https://github.com/EquosAI/equos-browser-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/EquosAI/equos-browser-sdk/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EquosAI/equos-browser-sdk.git"
+  },
   "license": "ISC",
-  "author": "",
+  "author": "Loïc Combis <https://www.linkedin.com/in/lo%C3%AFc-combis-a211a813a/>",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.45.0",
@@ -17,6 +45,8 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.1.0",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.3"
   }
 }
