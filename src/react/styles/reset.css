@@ -1,0 +1,27 @@
+.equos, 
+.equos * {
+  all: unset;
+  box-sizing: border-box;
+  font: inherit;
+}
+
+.equos * {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+.equos img, 
+.equos video, 
+.equos canvas, 
+.equos svg {
+  display: block;
+  max-width: 100%;
+}
+
+.equos input, 
+.equos button, 
+.equos textarea, 
+.equos select {
+  font: inherit;
+}
