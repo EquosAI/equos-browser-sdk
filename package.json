@@ -1,5 +1,5 @@
 {
-  "name": "equos-browser-sdk",
+  "name": "@equos/browser-sdk",
   "version": "1.0.1",
   "description": "Equos browser sdk",
   "keywords": [
