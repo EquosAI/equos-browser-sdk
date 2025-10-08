@@ -1,25 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "ES2017",
-        "module": "ESNext",
-        "lib": [
-            "dom",
-            "esnext"
-        ],
-        "declaration": true,
-        "declarationDir": "dist/types",
-        "outDir": "dist",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "jsx": "react-jsx",
-        "strict": true,
-        "skipLibCheck": true
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@equos/browser-sdk": ["src/core"],
+      "@equos/browser-sdk/react": ["src/react"]
     },
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "outDir": "dist/types",
+    "moduleResolution": "node",
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
 }

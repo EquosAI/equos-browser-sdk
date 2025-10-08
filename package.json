@@ -31,6 +31,27 @@
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
+  "types": "dist/core/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./react": {
+      "import": "./dist/react.es.js",
+      "require": "./dist/react.cjs.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "react": [
+        "dist/types/react/index.d.ts"
+      ],
+      "*": [
+        "dist/types/core/index.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],

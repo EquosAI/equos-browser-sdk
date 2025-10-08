@@ -1,25 +1,27 @@
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 import react from '@vitejs/plugin-react';
+import dts from 'vite-plugin-dts';
+import path from 'path';
 
 export default defineConfig({
   plugins: [
     react(),
     dts({
       entryRoot: 'src',
-      outputDir: 'dist',
-      tsConfigFilePath: './tsconfig.json',
+      outputDir: 'dist/types',
+      tsconfigPath: './tsconfig.json',
       include: ['src'],
-      insertTypesEntry: true,
-      rollupTypes: true,
     }),
   ],
+
   build: {
     lib: {
-      entry: 'src/index.ts',
-      name: 'Equos Browser SDK',
+      entry: {
+        index: path.resolve(__dirname, 'src/core/index.ts'),
+        react: path.resolve(__dirname, 'src/react/index.ts'),
+      },
+      name: 'EquosBrowserSDK',
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
       external: [
@@ -27,8 +29,18 @@ export default defineConfig({
         'react-dom',
         'livekit-client',
         '@livekit/components-react',
-        '@livekit/react-core',
+        '@livekit/components-styles',
+        'lucide-react',
       ],
+      output: {
+        dir: 'dist',
+        entryFileNames: '[name].[format].js',
+        chunkFileNames: 'chunks/[name]-[hash].js',
+        exports: 'named',
+        preserveModules: false,
+      },
     },
+    sourcemap: true,
+    emptyOutDir: true,
   },
 });
