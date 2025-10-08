@@ -45,10 +45,10 @@
   "typesVersions": {
     "*": {
       "react": [
-        "dist/types/react/index.d.ts"
+        "dist/react/index.d.ts"
       ],
       "*": [
-        "dist/types/core/index.d.ts"
+        "dist/core/index.d.ts"
       ]
     }
   },
