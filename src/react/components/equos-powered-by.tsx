@@ -1,6 +1,6 @@
 import '../styles/powered-by.css';
 
-export default function EquosPoweredBy() {
+export function EquosPoweredBy() {
   return (
     <div className="equos equos-powered-by">
       Powered by{' '}

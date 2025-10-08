@@ -5,7 +5,7 @@ import {
   CreateEquosBrowserSessionResponse,
   EquosBrowserSession,
 } from '../../core/types/session.types';
-import EquosConversation from './equos-conversation';
+import { EquosConversation } from './equos-conversation';
 
 import { CopyUtils, EquosLocale } from '../../core/utils/copy.utils';
 
@@ -13,7 +13,7 @@ import '../styles/reset.css';
 import '../styles/base.css';
 import '../styles/agent-bubbles.css';
 
-export default function EquosAgentBubbles({
+export function EquosAgentBubbles({
   direction = 'row',
   dark = false,
   allowAudio = true,

@@ -2,15 +2,15 @@ import { CreateEquosBrowserSessionResponse } from '../../core/types/session.type
 
 import { LiveKitRoom } from '@livekit/components-react';
 
-import EquosRoomRenderer from './equos-room-renderer';
-import EquosPoweredBy from './equos-powered-by';
+import { EquosRoomRenderer } from './equos-room-renderer';
+import { EquosPoweredBy } from './equos-powered-by';
 
 import '@livekit/components-styles';
 import '../styles/reset.css';
 import '../styles/base.css';
 import '../styles/conversation.css';
 
-export default function EquosConversation({
+export function EquosConversation({
   allowAudio = true,
   allowVideo = false,
   allowScreenShare = false,

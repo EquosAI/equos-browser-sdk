@@ -6,7 +6,7 @@ import { CopyUtils, EquosLocale } from '../../core/utils/copy.utils';
 import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
 import { Mic, MicOff, PhoneMissed } from 'lucide-react';
 
-export default function EquosRoomRenderer({
+export function EquosRoomRenderer({
   allowAudio = true,
   allowVideo = true,
   allowScreenShare = true,

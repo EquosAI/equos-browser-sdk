@@ -1,3 +1,3 @@
-export default function EquosPlaceholderTrigger() {
+export function EquosPlaceholderTrigger() {
   return <div>EquosPlaceholderTrigger Component</div>;
 }

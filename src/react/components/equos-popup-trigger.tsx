@@ -4,10 +4,10 @@ import { EquosBrowserConversationTriggerConfig } from '../../core/types/equos.ty
 import '../styles/reset.css';
 import '../styles/popup-trigger.css';
 
-import EquosAgentBubbles from './equos-agent-bubbles';
-import EquosPoweredBy from './equos-powered-by';
+import { EquosAgentBubbles } from './equos-agent-bubbles';
+import { EquosPoweredBy } from './equos-powered-by';
 
-export default function EquosPopupTrigger({
+export function EquosPopupTrigger({
   alignX = 'right',
   alignY = 'bottom',
   direction = 'row',
