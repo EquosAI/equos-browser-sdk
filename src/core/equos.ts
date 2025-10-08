@@ -5,6 +5,7 @@ import {
   EquosUserProfile,
 } from './types/equos.types';
 import { ConstantsUtils } from './utils/constants.utils';
+import { EquosLocale } from './utils/copy.utils';
 import { HttpUtils } from './utils/http.utils';
 
 class EquosBrowser {
@@ -52,6 +53,10 @@ class EquosBrowser {
 
   setIdentity(identity: string): void {
     this._profile.identity = identity;
+  }
+
+  setPreferredLanguage(locale: EquosLocale): void {
+    this._profile.preferredLanguage = locale;
   }
 
   async registerTrigger(

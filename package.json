@@ -28,19 +28,29 @@
   },
   "license": "ISC",
   "author": "Loïc Combis <https://www.linkedin.com/in/lo%C3%AFc-combis-a211a813a/>",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "rimraf dist && vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "react": ">=17",
-    "react-dom": ">=17"
+    "@livekit/components-react": "^2.9.15",
+    "@livekit/components-styles": "^1.1.6",
+    "livekit-client": "^2.15.8",
+    "lucide-react": "^0.545.0",
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "devDependencies": {
     "@types/react": "^19.2.2",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
+    "@vitejs/plugin-react": "^5.0.4",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
@@ -48,6 +58,8 @@
     "eslint-plugin-react-hooks": "^6.1.0",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

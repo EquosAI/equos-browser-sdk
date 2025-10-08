@@ -3,6 +3,16 @@
     z-index: 1000;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: var(--equos-popup-align);
+    justify-content: var(--equos-popup-align);
+    gap: 8px;
+
+    left: var(--equos-popup-left);
+    right: var(--equos-popup-right);
+    top: var(--equos-popup-top);
+    bottom: var(--equos-popup-bottom);
+
+    /* Make sure the popup is centered when alignment is center */
+    transform: translateX(var(--equos-popup-translate-x));
 }

@@ -30,6 +30,7 @@ export interface EquosBrowserSession {
   avatar: EquosBrowserAvatar;
   agentId: string;
   agent: EquosBrowserAgent;
+  maxDuration?: number;
   startedAt: Date;
   endedAt?: Date;
   createdAt: Date;

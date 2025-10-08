@@ -25,3 +25,15 @@
 .equos select {
   font: inherit;
 }
+
+.equos button, .equos a {
+    cursor: pointer;
+}
+
+.equos button:focus, .equos a:focus {
+    outline: none;
+}
+
+.equos button:hover, .equos a:hover {
+    outline: none;
+}

@@ -1,3 +1,4 @@
+import { EquosLocale } from '../utils/copy.utils';
 import { EquosBrowserSession } from './session.types';
 
 export interface EquosBrowserOptions {
@@ -25,6 +26,7 @@ export interface EquosUserProfile {
   name: string;
   identity: string;
 
+  preferredLanguage?: EquosLocale;
   client?: string;
 }
 
