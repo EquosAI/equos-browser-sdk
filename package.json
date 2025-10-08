@@ -42,7 +42,8 @@
       "types": "./dist/react/index.d.ts",
       "import": "./dist/react.es.js",
       "require": "./dist/react.cjs.js"
-    }
+    },
+    "./styles.css": "./dist/browser-sdk.css"
   },
   "typesVersions": {
     "*": {
