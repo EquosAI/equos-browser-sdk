@@ -34,10 +34,12 @@
   "types": "dist/core/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/core/index.d.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js"
     },
     "./react": {
+      "types": "./dist/react/index.d.ts",
       "import": "./dist/react.es.js",
       "require": "./dist/react.cjs.js"
     }

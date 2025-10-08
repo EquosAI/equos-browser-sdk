@@ -8,7 +8,6 @@ export default defineConfig({
     react(),
     dts({
       entryRoot: 'src',
-      outputDir: 'dist/types',
       tsconfigPath: './tsconfig.json',
       include: ['src'],
     }),
