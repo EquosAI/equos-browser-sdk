@@ -146,4 +146,132 @@ export class CopyUtils {
         return `${timeString} left`;
     }
   }
+
+  static failedToHangupCopy(locale: string): string {
+    switch (locale) {
+      case EquosLocale.FR:
+        return `Nous n'avons pas réussi à raccrocher.`;
+      case EquosLocale.ES:
+        return `No pudimos colgar.`;
+      case EquosLocale.DE:
+        return `Auflegen fehlgeschlagen.`;
+      case EquosLocale.IT:
+        return `Non siamo riusciti a riagganciare.`;
+      case EquosLocale.PT:
+        return `Não conseguimos desligar.`;
+      case EquosLocale.NL:
+        return `We konden niet ophangen.`;
+      case EquosLocale.RU:
+        return `Не удалось завершить звонок.`;
+      case EquosLocale.ZH:
+        return `我们无法挂断。`;
+      case EquosLocale.JA:
+        return `通話を終了できませんでした。`;
+      case EquosLocale.KO:
+        return `전화를 끊지 못했습니다.`;
+      case EquosLocale.AR:
+        return `لم نتمكن من إنهاء المكالمة.`;
+      case EquosLocale.HI:
+        return `हम कॉल समाप्त नहीं कर सके।`;
+      case EquosLocale.EN:
+      default:
+        return `We failed to hang up.`;
+    }
+  }
+
+  static avatarNotJoiningCopy(locale: string, name: string): string {
+    switch (locale) {
+      case EquosLocale.FR:
+        return `${name} à du mal à se connecter.`;
+      case EquosLocale.ES:
+        return `${name} tiene problemas para unirse.`;
+      case EquosLocale.DE:
+        return `${name} Probleme beim Beitreten hat.`;
+      case EquosLocale.IT:
+        return `${name} abbia difficoltà a connettersi.`;
+      case EquosLocale.PT:
+        return `${name} está com dificuldades para entrar.`;
+      case EquosLocale.NL:
+        return `${name} moeite heeft om deel te nemen.`;
+      case EquosLocale.RU:
+        return `${name} испытывает трудности с подключением.`;
+      case EquosLocale.ZH:
+        return `${name}加入时遇到困难。`;
+      case EquosLocale.JA:
+        return `${name}が参加できないようです。`;
+      case EquosLocale.KO:
+        return `${name}(이)가 참여하는 데 어려움을 겪고 있습니다.`;
+      case EquosLocale.AR:
+        return `${name} يواجه صعوبة في الانضمام.`;
+      case EquosLocale.HI:
+        return `${name} जुड़ने में परेशानी हो रही है।`;
+      case EquosLocale.EN:
+      default:
+        return `${name} is having trouble joining.`;
+    }
+  }
+
+  static avatarJoiningCopy(locale: string, name: string): string {
+    switch (locale) {
+      case EquosLocale.FR:
+        return `${name} se connecte...`;
+      case EquosLocale.ES:
+        return `${name} se está uniendo...`;
+      case EquosLocale.DE:
+        return `${name} tritt bei...`;
+      case EquosLocale.IT:
+        return `${name} si sta connettendo...`;
+      case EquosLocale.PT:
+        return `${name} está entrando...`;
+      case EquosLocale.NL:
+        return `${name} doet mee...`;
+      case EquosLocale.RU:
+        return `${name} присоединяется...`;
+      case EquosLocale.ZH:
+        return `${name}正在加入...`;
+      case EquosLocale.JA:
+        return `${name}が参加しています...`;
+      case EquosLocale.KO:
+        return `${name}(이)가 참여 중입니다...`;
+      case EquosLocale.AR:
+        return `${name} ينضم...`;
+      case EquosLocale.HI:
+        return `${name} जुड़ रहा है...`;
+      case EquosLocale.EN:
+      default:
+        return `${name} is joining...`;
+    }
+  }
+
+  static endingSessionCopy(locale: string, countdown: number): string {
+    switch (locale) {
+      case EquosLocale.FR:
+        return `Fin automatique dans ${countdown}s...`;
+      case EquosLocale.ES:
+        return `Finalización automática en ${countdown}s...`;
+      case EquosLocale.DE:
+        return `Automatisches Beenden in ${countdown}s...`;
+      case EquosLocale.IT:
+        return `Chiusura automatica tra ${countdown}s...`;
+      case EquosLocale.PT:
+        return `Encerramento automático em ${countdown}s...`;
+      case EquosLocale.NL:
+        return `Automatisch afsluiten over ${countdown}s...`;
+      case EquosLocale.RU:
+        return `Автоматическое завершение через ${countdown}с...`;
+      case EquosLocale.ZH:
+        return `${countdown}秒后自动结束...`;
+      case EquosLocale.JA:
+        return `${countdown}秒で自動終了します...`;
+      case EquosLocale.KO:
+        return `${countdown}초 후 자동 종료...`;
+      case EquosLocale.AR:
+        return `إنهاء تلقائي في ${countdown} ثوان...`;
+      case EquosLocale.HI:
+        return `${countdown} सेकंड में स्वचालित समाप्ति...`;
+      case EquosLocale.EN:
+      default:
+        return `Auto ending in ${countdown}s...`;
+    }
+  }
 }

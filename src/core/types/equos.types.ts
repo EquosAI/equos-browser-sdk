@@ -20,6 +20,9 @@ export interface EquosBrowserConversationTriggerConfig {
   description?: string;
   thumbnailUrl?: string;
   maxDuration?: number;
+  allowAudio?: boolean;
+  allowVideo?: boolean;
+  allowScreenShare?: boolean;
 }
 
 export interface EquosUserProfile {

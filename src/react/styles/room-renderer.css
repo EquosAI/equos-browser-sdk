@@ -1,0 +1,147 @@
+.equos-room-renderer {
+    position: relative;
+    width: var(--equos-conversation-size, 512px);
+    max-width: var(--equos-conversation-max-width, 95vw);
+    aspect-ratio: 1 / 1;
+
+    border-radius: 16px;
+
+    background-color: black;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.equos-room-renderer-countdown {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    z-index: 11;
+
+    display: flex;
+    align-items: center;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    background-color: black;
+    border-radius: 9999px;
+    padding: 4px 8px;
+}
+
+.equos-room-renderer-bottom-actions {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 11;
+    margin: 16px 0;
+
+    height: 10%;
+    min-height: 36px;
+    max-height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.equos-room-renderer-button {
+    border-radius: 9999px;
+    border: none;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+
+    background-color: rgba(255,255,255, 0.5);
+
+    color: white;
+    font: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.25s;
+}
+
+.equos-room-renderer-hangup {
+    border-radius: 9999px;
+    border: none;
+    height: 100%;
+    aspect-ratio: 2 / 1;
+
+    background-color: rgb(251, 44, 54, 0.75);
+
+    color: white;
+    font: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 12px;
+
+    transition: background-color 0.25s;
+}
+
+.equos-room-renderer-button:hover {
+    background-color: rgba(255,255,255, 0.75);
+}
+
+.equos-room-renderer-hangup:hover {
+    background-color: rgb(251, 44, 54, 1);
+}
+
+.equos-room-renderer-error {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+
+    font-size: 11px;
+    background-color: rgb(251, 44, 54, 0.5);
+    color: white;
+
+    padding: 4px 8px;
+    border-radius: 9999px;
+
+    transition: transform 300ms ease, opacity 300ms ease;
+}
+
+.equos-room-renderer-error.equos-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -20px);
+}
+
+.equos-room-renderer-error.equos-visible {
+    opacity: 1;
+    transform: none;
+    transform: translate(-50%, 0);
+
+}
+
+.equos-room-renderer-text {
+    font-size: 12px;
+    color: white;
+}
+
+.equos-room-renderer-subtext {
+    font-size: 11px;
+    color: gray;
+}
+
+.equos-room-renderer-column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    padding: 8px;
+}

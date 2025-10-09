@@ -60,6 +60,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && vite build",
+    "dev": "vite dev --config ./vite.config.site.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {

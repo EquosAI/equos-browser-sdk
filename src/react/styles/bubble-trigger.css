@@ -1,0 +1,132 @@
+.equos-bubble-trigger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.equos-bubble-trigger-collapse-button:hover {
+    opacity: 0.8;
+}
+
+
+.equos-bubble-trigger-button {
+    width: fit-content;
+    height: fit-content;
+
+    border-radius: 9999px;
+
+    padding: 2px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    outline: none;
+    border: none;
+
+    position: relative;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.equos-bubble-trigger-button:hover {
+    opacity: 0.8;
+}
+
+.equos-bubble-trigger-button img {
+    height: 48px;
+    width: 48px;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: none;
+}
+
+.equos-bubble-trigger-button-label {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.equos-bubble-trigger-button-status {
+    font-size: 11px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #2eb88a;
+}
+
+.equos-bubble-trigger-button-status::before {
+    width: 4px;
+    height: 4px;
+    content: '';
+    display: inline-block;
+    margin-right: 4px;
+    transform: translateY(-50%);
+    border-radius: 1000px;
+    background-color: #2eb88a;
+}
+
+.equos-bubble-trigger-button-collapsed {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 0;
+    text-wrap: nowrap;
+    overflow: hidden;
+    gap: 4px;
+}
+
+.equos-bubble-trigger-button-expanded {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    width: auto;
+    padding: 0 12px 0 4px;
+    text-wrap: nowrap;
+    overflow: auto;
+
+    gap: 4px;
+}
+
+.equos-bubble-trigger-conversation {
+    position: fixed;
+    z-index: 10000;
+    overflow: hidden;
+    transition: all 250ms ease;
+    border-radius: 16px;
+}
+
+.equos-bubble-trigger-conversation.equos-hidden {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+.equos-bubble-trigger-conversation.equos-visible {
+    opacity: 1;
+    height: auto;
+    width: auto;
+}
+
+.equos-bubble-trigger-session-callout {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 10;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 9999px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #2eb88a;
+    color: white;
+
+    animation: pulse 2000ms infinite;
+}

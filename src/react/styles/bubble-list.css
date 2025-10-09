@@ -1,0 +1,11 @@
+
+
+.equos-bubble-list {
+    position: relative;
+    display: flex;
+    gap: 8px;
+    
+    flex-direction: var(--equos-direction);
+    justify-content: var(--equos-align-y);
+    align-items: var(--equos-align-y);
+}

@@ -63,7 +63,7 @@ class EquosBrowser {
     trigger: EquosBrowserConversationTrigger,
   ): Promise<void> {
     if (this.triggers.has(trigger.id)) {
-      console.error(`Trigger with id ${trigger.id} already registered.`);
+      console.warn(`Trigger with id ${trigger.id} already registered.`);
       return;
     }
 

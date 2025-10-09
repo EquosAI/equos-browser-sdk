@@ -1,37 +1,61 @@
-import { useTrackToggle } from '@livekit/components-react';
+import {
+  ParticipantTile,
+  RoomAudioRenderer,
+  TrackLoop,
+  useParticipants,
+  useTracks,
+  useTrackToggle,
+} from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import { useEffect, useMemo, useState } from 'react';
 import { getEquosBrowser } from '../../core/equos';
 import { CopyUtils, EquosLocale } from '../../core/utils/copy.utils';
 import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
-import { Mic, MicOff, PhoneMissed } from 'lucide-react';
+import { Loader2, Mic, MicOff, PhoneMissed } from 'lucide-react';
+
+import '../styles/reset.css';
+import '../styles/base.css';
+import '../styles/room-renderer.css';
 
 export function EquosRoomRenderer({
   allowAudio = true,
   allowVideo = true,
   allowScreenShare = true,
   session,
+  onHangUp,
 }: {
   allowAudio?: boolean;
   allowVideo?: boolean;
   allowScreenShare?: boolean;
   session: CreateEquosBrowserSessionResponse;
+  onHangUp: () => Promise<void>;
 }) {
+  const waitForAvatarToJoin = 20;
+
   const equos = useMemo(() => getEquosBrowser(), []);
+
+  const [hangingUp, setHangingUp] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [avatarJoined, setAvatarJoined] = useState(false);
+  const [avatarLeft, setAvatarLeft] = useState(false);
+
+  const [remainingTime, setRemainingTime] = useState<string | null>(null);
+  const [duration, setDuration] = useState(0);
+
+  const participants = useParticipants();
 
   const micToggle = useTrackToggle({
     source: Track.Source.Microphone,
   });
 
-  const videoToggle = useTrackToggle({
-    source: Track.Source.Camera,
-  });
+  const tracks = useTracks([
+    { source: Track.Source.Camera, withPlaceholder: false },
+  ]);
 
-  const screenShareToggle = useTrackToggle({
-    source: Track.Source.ScreenShare,
-  });
-
-  const [remainingTime, setRemainingTime] = useState<string | null>(null);
+  const avatarHasTroubleJoining = useMemo(() => {
+    return !avatarJoined && duration > waitForAvatarToJoin - 10;
+  }, [avatarJoined, duration]);
 
   const locale: EquosLocale = useMemo(() => {
     if (equos.profile.preferredLanguage) {
@@ -53,53 +77,171 @@ export function EquosRoomRenderer({
     return EquosLocale.EN;
   }, []);
 
-  useEffect(() => {
-    if (!session.session.maxDuration) {
-      return;
+  const errorClasses = useMemo(() => {
+    let classes = 'equos-room-renderer-error';
+
+    if (error) {
+      classes += ' equos-visible';
+    } else {
+      classes += ' equos-hidden';
     }
+
+    return classes;
+  }, [error]);
+
+  useEffect(() => {
+    if (!avatarJoined && duration > waitForAvatarToJoin) {
+      hangUp();
+    }
+  }, [avatarJoined, duration, waitForAvatarToJoin]);
+
+  useEffect(() => {
     const i = setInterval(() => {
-      const elapsedTime =
-        new Date().getTime() - new Date(session.session.startedAt).getTime();
+      if (session.session.maxDuration) {
+        const elapsedTime =
+          new Date().getTime() - new Date(session.session.startedAt).getTime();
 
-      const remainingSeconds = Math.round(
-        Math.max(0, session.session.maxDuration! * 1000 - elapsedTime) / 1000,
-      );
+        const remainingSeconds = Math.round(
+          Math.max(0, session.session.maxDuration! * 1000 - elapsedTime) / 1000,
+        );
 
-      setRemainingTime(CopyUtils.timeLeftCopy(locale, remainingSeconds));
+        setRemainingTime(CopyUtils.timeLeftCopy(locale, remainingSeconds));
+      }
+
+      setDuration((duration) => duration + 1);
     }, 1000);
 
     return () => clearInterval(i);
   }, [session.session.startedAt, session.session.maxDuration]);
 
+  useEffect(() => {
+    if (avatarJoined) {
+      const avatar = participants.find(
+        (p) => p.identity === session.session.avatar.identity,
+      );
+
+      if (!avatar) {
+        setAvatarLeft(true);
+      }
+    } else {
+      const avatar = participants.find(
+        (p) => p.identity === session.session.avatar.identity,
+      );
+
+      if (avatar) {
+        setAvatarJoined(true);
+      }
+    }
+  }, [session.session.avatar.identity, avatarJoined, participants]);
+
+  useEffect(() => {
+    if (avatarLeft) {
+      hangUp();
+    }
+  }, [avatarLeft]);
+  const hangUp = async () => {
+    if (hangingUp) {
+      return;
+    }
+
+    setHangingUp(true);
+
+    let success = false;
+    let tries = 0;
+
+    while (!success && tries < 3) {
+      try {
+        await equos.sessions.stop(session.session.id);
+        success = true;
+      } catch (e) {
+        console.error(e);
+        tries++;
+      }
+    }
+
+    if (!success) {
+      showError(CopyUtils.failedToHangupCopy(locale));
+      return;
+    }
+
+    if (onHangUp) {
+      await onHangUp().catch();
+    }
+
+    setHangingUp(false);
+  };
+
+  const showError = (error: string, duration: number = 2000) => {
+    setError(error);
+    setTimeout(() => {
+      setError(null);
+    }, duration);
+  };
+
   return (
-    <div className="equos-conversation-mask">
-      <div className="equos-conversation-ai-avatar">
-        <span className="equos-conversation-ai-avatar-badge">AI</span>
-        <span className="equos-conversation-ai-avatar-label">Avatar</span>
-      </div>
+    <div className="equos-room-renderer">
+      {/* Error MSG */}
+      <span className={errorClasses}>{error}</span>
+
+      {/* Remaining Time */}
       {remainingTime && (
-        <span className="equos-conversation-countdown">{remainingTime}</span>
+        <span className="equos-room-renderer-countdown">{remainingTime}</span>
       )}
 
-      <div className="equos-conversation-bottom-actions">
-        {allowAudio && (
-          <button className="equos-conversation-button">
-            {micToggle.enabled ? (
-              <Mic className="size-7" />
-            ) : (
-              <MicOff className="size-7" />
+      {/* Avatar joining */}
+      {!avatarJoined && !avatarHasTroubleJoining && (
+        <span className="equos-room-renderer-text">
+          {CopyUtils.avatarJoiningCopy(locale, session.session.avatar.name)}
+        </span>
+      )}
+
+      {/* Avatar not joining count down */}
+      {!avatarJoined && avatarHasTroubleJoining && (
+        <span className="equos-room-renderer-column">
+          <span className="equos-room-renderer-text">
+            {CopyUtils.avatarNotJoiningCopy(
+              locale,
+              session.session.avatar.name,
             )}
+          </span>
+          <span className="equos-room-renderer-subtext">
+            {CopyUtils.endingSessionCopy(
+              locale,
+              Math.max(waitForAvatarToJoin - duration, 0),
+            )}
+          </span>
+        </span>
+      )}
+
+      {/* Avatar Audio & Video */}
+      <TrackLoop tracks={tracks}>
+        <ParticipantTile className="equos-room-renderer-participant-tile"></ParticipantTile>
+      </TrackLoop>
+
+      <RoomAudioRenderer />
+
+      {/* Bottom Buttons */}
+      <div className="equos-room-renderer-bottom-actions">
+        {allowAudio && (
+          <button
+            className="equos-room-renderer-button"
+            type="button"
+            onClick={() => micToggle.toggle()}
+          >
+            {micToggle.enabled ? <Mic size={18} /> : <MicOff size={18} />}
           </button>
         )}
-        <button className="equos-conversation-hangup">
-          <PhoneMissed />
+        <button
+          type="button"
+          className="equos-room-renderer-hangup"
+          onClick={hangUp}
+        >
+          {hangingUp ? (
+            <Loader2 size={18} className="equos-spinner" />
+          ) : (
+            <PhoneMissed size={18} />
+          )}
         </button>
-        {allowVideo && (
-          <button className="equos-conversation-button">video</button>
-        )}
-        {allowVideo && (
-          <button className="equos-conversation-button">video</button>
-        )}
       </div>
     </div>
   );

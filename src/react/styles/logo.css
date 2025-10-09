@@ -1,0 +1,13 @@
+.equos-logo {
+
+    transition: transform 200ms ease;
+}
+
+.equos-logo:hover {
+    transform: scale(1.1);
+}
+
+.equos-logo.equos-pulse {
+    animation: pulse 1.5s infinite;
+}
+

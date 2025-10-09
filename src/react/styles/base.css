@@ -5,8 +5,38 @@
 }
 
 .equos-dark {
-    background-color: #1a1a1a;
+    background-color: black;
     color: white;
-    border-color: #1a1a1a;
+    border-color: black;
 }
 
+.equos-spinner {
+    animation: spin 750ms linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7);
+        opacity: 1;
+    }
+    10% {
+        opacity: 0.75;
+    }
+    70% {
+        box-shadow: 0 0 4px 16px rgba(128, 128, 128, 0);
+        opacity: 1;
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(128, 128, 128, 0);
+        opacity: 1;
+    }
+}

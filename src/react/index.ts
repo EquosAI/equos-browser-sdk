@@ -1,4 +1,10 @@
-export * from './components/equos-agent-bubbles';
-export * from './components/equos-conversation';
-export * from './components/equos-popup-trigger';
+// Session Triggers
+export * from './components/equos-bubble-trigger';
 export * from './components/equos-placeholder-trigger';
+
+// Layout Components
+export * from './components/equos-popup';
+export * from './components/equos-bubble-list';
+
+// Conversation Component
+export * from './components/equos-conversation';

@@ -22,7 +22,7 @@ export class HttpUtils {
 
   async patch<T, U>(path: string, data: T): Promise<U> {
     return fetch(this.getPath(path), {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.clientKey}`,
