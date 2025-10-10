@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { initEquosBrowser } from './src/core/equos';
-import { EquosLocale } from './src/core/utils/copy.utils';
 import {
   EquosBubbleList,
   EquosPlaceholderTrigger,
   EquosPopup,
 } from './src/react';
-import { EquosBrowserEvent } from './src/core/types/equos.types';
+import { EquosBrowserEvent, EquosLocale } from './src/core/types/equos.types';
 
 const equos = initEquosBrowser('');
 

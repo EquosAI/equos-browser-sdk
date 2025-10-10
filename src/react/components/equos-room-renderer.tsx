@@ -9,13 +9,14 @@ import {
 import { Track } from 'livekit-client';
 import { useEffect, useMemo, useState } from 'react';
 import { getEquosBrowser } from '../../core/equos';
-import { CopyUtils, EquosLocale } from '../../core/utils/copy.utils';
+import { CopyUtils } from '../../core/utils/copy.utils';
 import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
 import { Loader2, Mic, MicOff, PhoneMissed } from 'lucide-react';
 
 import '../styles/reset.css';
 import '../styles/base.css';
 import '../styles/room-renderer.css';
+import { EquosLocale } from '@equos/browser-sdk';
 
 export function EquosRoomRenderer({
   allowAudio = true,

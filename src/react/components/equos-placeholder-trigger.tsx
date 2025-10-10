@@ -11,11 +11,12 @@ import {
   EquosBrowserControlEvent,
   EquosBrowserConversationTriggerConfig,
   EquosBrowserEvent,
+  EquosLocale,
 } from '../../core/types/equos.types';
 import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
 import { EquosConversation } from './equos-conversation';
 
-import { CopyUtils, EquosLocale } from '../../core/utils/copy.utils';
+import { CopyUtils } from '../../core/utils/copy.utils';
 
 import '../styles/reset.css';
 import '../styles/base.css';

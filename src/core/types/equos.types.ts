@@ -1,5 +1,18 @@
-import { EquosLocale } from '../utils/copy.utils';
-import { EquosBrowserSession } from './session.types';
+export enum EquosLocale {
+  EN = 'en',
+  FR = 'fr',
+  ES = 'es',
+  DE = 'de',
+  IT = 'it',
+  PT = 'pt',
+  NL = 'nl',
+  RU = 'ru',
+  ZH = 'zh',
+  JA = 'ja',
+  KO = 'ko',
+  AR = 'ar',
+  HI = 'hi',
+}
 
 export interface EquosBrowserOptions {
   /**
