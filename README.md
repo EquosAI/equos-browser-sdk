@@ -1,5 +1,5 @@
 # @equos/browser-sdk
-[Equos.ai](https://www.equos.ai) official BrowserJS SDK.
+[Equos.ai](https://www.equos.ai) official BrowserJS SDK & React Components.
 
 ![Screenshot UI Components](./public/screenshot.png)
 
@@ -15,6 +15,7 @@ npm install @equos/browser-sdk
 ```
 
 ## React Components Usage
+[Check our react sample app.](https://github.com/EquosAI/equos-examples/blob/main/examples/equos-react-integration/README.md)
 
 ```ts
 import { useEffect, useRef } from 'react';
@@ -127,3 +128,8 @@ You don't have a client key ? [Create one here](https://studio.equos.ai)
 - Official Documentation: [https://docs.equos.ai](https://docs.equos.ai)
 - Equos NodeJS Usage Examples: [https://github.com/EquosAI/equos-examples/tree/main/examples/equos-nextjs-integration](https://github.com/EquosAI/equos-examples/tree/main/examples/equos-nextjs-integration)
 - Equos Python Examples: [https://github.com/EquosAI/equos-examples/tree/main/examples/equos-python-integration](https://github.com/EquosAI/equos-examples/tree/main/examples/equos-python-integration)
+- Equos React Examples: [https://github.com/EquosAI/equos-examples/blob/main/examples/equos-react-integration/README.md](https://github.com/EquosAI/equos-examples/blob/main/examples/equos-react-integration/README.md)
+
+
+## Authors
+- [Loïc Combis](https://www.linkedin.com/in/lo%C3%AFc-combis-a211a813a/)
