@@ -4,10 +4,10 @@ import {
   EquosBrowserConversationTriggerConfig,
   EquosBrowserEvent,
   EquosBrowserOptions,
+  EquosLocale,
   EquosUserProfile,
 } from './types/equos.types';
 import { ConstantsUtils } from './utils/constants.utils';
-import { EquosLocale } from './utils/copy.utils';
 import { HttpUtils } from './utils/http.utils';
 
 class EquosBrowser {
