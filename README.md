@@ -14,7 +14,7 @@
 npm install @equos/browser-sdk
 ```
 
-## Usage
+## React Components Usage
 
 ```ts
 import { useEffect, useRef } from 'react';
@@ -42,6 +42,11 @@ function App() {
       console.log(event);
       console.log((event as CustomEvent).detail);
     });
+
+
+    // You can also start and stop sessions programmatically
+    // equos.start(config)
+    // equos.stop(config)
   }, []);
 
   const agent = useRef({
