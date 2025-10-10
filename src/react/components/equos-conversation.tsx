@@ -5,9 +5,6 @@ import { LiveKitRoom } from '@livekit/components-react';
 import { EquosRoomRenderer } from './equos-room-renderer';
 
 import '@livekit/components-styles';
-import '../styles/reset.css';
-import '../styles/base.css';
-import '../styles/conversation.css';
 import { useMemo } from 'react';
 import EquosLogo from './equos-logo';
 

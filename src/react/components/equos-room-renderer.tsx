@@ -1,22 +1,17 @@
 import {
-  ParticipantTile,
   RoomAudioRenderer,
-  TrackLoop,
+  TrackReference,
   useParticipants,
-  useTracks,
   useTrackToggle,
+  VideoTrack,
 } from '@livekit/components-react';
-import { Track } from 'livekit-client';
+import { Track, TrackPublication } from 'livekit-client';
 import { useEffect, useMemo, useState } from 'react';
 import { getEquosBrowser } from '../../core/equos';
 import { CopyUtils } from '../../core/utils/copy.utils';
 import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
 import { EquosLocale } from '../../core/types/equos.types';
 import { Loader2, Mic, MicOff, PhoneMissed } from 'lucide-react';
-
-import '../styles/reset.css';
-import '../styles/base.css';
-import '../styles/room-renderer.css';
 
 export function EquosRoomRenderer({
   allowAudio = true,
@@ -50,13 +45,33 @@ export function EquosRoomRenderer({
     source: Track.Source.Microphone,
   });
 
-  const tracks = useTracks([
-    { source: Track.Source.Camera, withPlaceholder: false },
-  ]);
-
   const avatarHasTroubleJoining = useMemo(() => {
     return !avatarJoined && duration > waitForAvatarToJoin - 10;
   }, [avatarJoined, duration]);
+
+  const avatartrackRef: TrackReference | null = useMemo(() => {
+    const avatar = participants.find(
+      (p) => p.identity === session.session.avatar.identity,
+    );
+
+    if (!avatar || !avatar.trackPublications) {
+      return null;
+    }
+
+    const publication = Array.from(
+      avatar.trackPublications.values() as MapIterator<TrackPublication>,
+    ).find((pub) => pub.source === 'camera');
+
+    if (!publication) {
+      return null;
+    }
+
+    return {
+      participant: avatar,
+      publication,
+      source: publication.source,
+    };
+  }, [participants, session.session.avatar.identity]);
 
   const locale: EquosLocale = useMemo(() => {
     if (equos.profile.preferredLanguage) {
@@ -140,6 +155,7 @@ export function EquosRoomRenderer({
       hangUp();
     }
   }, [avatarLeft]);
+
   const hangUp = async () => {
     if (hangingUp) {
       return;
@@ -215,9 +231,12 @@ export function EquosRoomRenderer({
       )}
 
       {/* Avatar Audio & Video */}
-      <TrackLoop tracks={tracks}>
-        <ParticipantTile className="equos-room-renderer-participant-tile"></ParticipantTile>
-      </TrackLoop>
+      {avatartrackRef && (
+        <VideoTrack
+          trackRef={avatartrackRef}
+          className="equos-room-renderer-participant-tile"
+        />
+      )}
 
       <RoomAudioRenderer />
 

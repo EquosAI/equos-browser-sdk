@@ -6,9 +6,6 @@ import {
   EquosBubbleTriggerHandle,
 } from './equos-bubble-trigger';
 
-import '../styles/reset.css';
-import '../styles/base.css';
-import '../styles/bubble-list.css';
 import * as React from 'react';
 
 export function EquosBubbleList({

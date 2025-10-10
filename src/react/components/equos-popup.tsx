@@ -1,9 +1,5 @@
 import { useMemo } from 'react';
 
-import '../styles/reset.css';
-import '../styles/base.css';
-import '../styles/popup.css';
-
 import { EquosPoweredBy } from './equos-powered-by';
 
 export function EquosPopup({

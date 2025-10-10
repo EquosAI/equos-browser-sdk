@@ -1,5 +1,3 @@
-import '../styles/powered-by.css';
-
 export function EquosPoweredBy() {
   return (
     <div className="equos equos-powered-by">

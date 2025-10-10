@@ -11,10 +11,6 @@ import { EquosConversation } from './equos-conversation';
 
 import { CopyUtils } from '../../core/utils/copy.utils';
 
-import '../styles/reset.css';
-import '../styles/base.css';
-import '../styles/placeholder-trigger.css';
-
 export function EquosPlaceholderTrigger({
   agent,
   dark = false,

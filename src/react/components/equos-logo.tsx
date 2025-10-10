@@ -1,7 +1,3 @@
-import '../styles/reset.css';
-import '../styles/base.css';
-import '../styles/logo.css';
-
 import { useMemo } from 'react';
 
 const EQUOS_LOGO: string =
