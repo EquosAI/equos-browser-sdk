@@ -18,11 +18,11 @@ import { EquosConversation } from './equos-conversation';
 
 import { CopyUtils } from '../../core/utils/copy.utils';
 
+import { UserCircle } from 'lucide-react';
+
 import '../styles/reset.css';
 import '../styles/base.css';
 import '../styles/bubble-trigger.css';
-
-import { UserCircle } from 'lucide-react';
 
 export type EquosBubbleTriggerHandle = {
   toggle: (expanded: boolean) => void;
