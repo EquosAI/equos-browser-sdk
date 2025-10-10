@@ -11,8 +11,6 @@ import '../styles/base.css';
 import '../styles/bubble-list.css';
 import * as React from 'react';
 
-type EquosBubbleRef = React.RefObject<EquosBubbleTriggerHandle>;
-
 export function EquosBubbleList({
   direction = 'row',
   alignX = 'right',
@@ -31,6 +29,25 @@ export function EquosBubbleList({
   const bubblesRef = useRef<
     Record<string, React.RefObject<EquosBubbleTriggerHandle>>
   >({});
+
+  const ids = useMemo(() => {
+    // Deterministic way to generate unique ids based on agent info.
+    const seen: string[] = [];
+    return agents.map((agent) => {
+      const base = btoa(JSON.stringify(agent));
+
+      let index = 0;
+
+      while (seen.includes(`${base}_${index}`)) {
+        index += 1;
+      }
+
+      const id = `${base}_${index}`;
+      seen.push(id);
+
+      return id;
+    });
+  }, [agents]);
 
   const verticalAlign = useMemo(() => {
     if (alignX === 'left') {
@@ -52,7 +69,7 @@ export function EquosBubbleList({
       // Close all other bubbles
       Object.keys(bubblesRef.current).forEach((key) => {
         if (key !== id) {
-          bubblesRef.current[key]?.current.toggle(false);
+          bubblesRef.current[key]?.current?.toggle(false);
         }
       });
     }
@@ -62,24 +79,22 @@ export function EquosBubbleList({
     <>
       <div className="equos equos-bubble-list" style={style}>
         {agents.map((agent, i) => {
-          // TODO: find unique id...
-          const id = agent.agentId + agent.avatarId;
-
-          if (!bubblesRef.current[id]) {
-            bubblesRef.current[id] =
+          if (!bubblesRef.current[ids[i]]) {
+            bubblesRef.current[ids[i]] =
               React.createRef<EquosBubbleTriggerHandle>();
           }
 
           return (
             <EquosBubbleTrigger
-              ref={bubblesRef.current[id]}
-              key={agent.agentId + agent.avatarId}
+              ref={bubblesRef.current[ids[i]]}
+              id={ids[i]}
+              key={ids[i]}
               agent={agent}
               initiallyExpanded={i === 0}
               dark={dark}
               windowSizeInPixels={windowSizeInPixels}
               windowMaxViewportWidthPercent={windowMaxViewportWidthPercent}
-              onToggle={(expanded) => onToggle(id, expanded)}
+              onToggle={(expanded) => onToggle(ids[i], expanded)}
             />
           );
         })}

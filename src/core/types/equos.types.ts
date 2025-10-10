@@ -33,10 +33,15 @@ export interface EquosUserProfile {
   client?: string;
 }
 
-export interface EquosBrowserConversationTrigger {
-  id: string;
-  agent: EquosBrowserConversationTriggerConfig;
+export enum EquosBrowserEvent {
+  registered = 'registered',
+  unregistered = 'unregistered',
+  started = 'started',
+  ended = 'ended',
+  error = 'error',
+}
 
-  start(): Promise<EquosBrowserSession>;
-  stop(): Promise<EquosBrowserSession>;
+export enum EquosBrowserControlEvent {
+  start = 'start',
+  stop = 'stop',
 }

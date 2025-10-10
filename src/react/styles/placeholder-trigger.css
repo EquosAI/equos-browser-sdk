@@ -1,0 +1,102 @@
+.equos-placeholder-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: var(--equos-placeholder-size);
+    height: var(--equos-placeholder-size);
+}
+
+.equos-placeholder-trigger-placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+
+    min-width: 256px;
+    min-height: 256px;
+}
+
+.equos-placeholder-trigger-placholder.equos-dark {
+   background-color: black;
+   color: white;
+}
+
+.equos-placeholder-trigger-placeholder.equos-light {
+   background-color: white;
+   color: black;
+}
+
+.equos-placeholder-trigger-placeholder > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    filter: blur(10px);
+    transform: scale(1.05);
+
+    border-radius: 16px;
+
+    z-index: 0;
+}
+
+.equos-placeholder-trigger-conversation {
+    z-index: 10000;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    transition: all 250ms ease;
+}
+
+.equos-placeholder-trigger-conversation.equos-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.equos-placeholder-trigger-conversation.equos-flat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+}
+
+.equos-placeholder-trigger-button {
+    position: absolute;
+
+    background-color: inherit;
+    color: inherit;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 1;
+
+    border: none;
+
+    border-radius: 9999px;
+
+
+    padding: 18px 36px;
+    white-space: nowrap;
+
+    transition: all 250ms ease;
+}
+
+.equos-placeholder-trigger-button:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    opacity: 0.85;
+}

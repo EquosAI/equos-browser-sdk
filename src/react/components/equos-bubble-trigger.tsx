@@ -7,11 +7,12 @@ import {
   useState,
 } from 'react';
 import { getEquosBrowser } from '../../core/equos';
-import { EquosBrowserConversationTriggerConfig } from '../../core/types/equos.types';
 import {
-  CreateEquosBrowserSessionResponse,
-  EquosBrowserSession,
-} from '../../core/types/session.types';
+  EquosBrowserControlEvent,
+  EquosBrowserConversationTriggerConfig,
+  EquosBrowserEvent,
+} from '../../core/types/equos.types';
+import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
 import { EquosConversation } from './equos-conversation';
 
 import { CopyUtils, EquosLocale } from '../../core/utils/copy.utils';
@@ -19,13 +20,14 @@ import { CopyUtils, EquosLocale } from '../../core/utils/copy.utils';
 import '../styles/reset.css';
 import '../styles/base.css';
 import '../styles/bubble-trigger.css';
-import { UserCircle, X } from 'lucide-react';
+import { UserCircle } from 'lucide-react';
 
 export type EquosBubbleTriggerHandle = {
   toggle: (expanded: boolean) => void;
 };
 
 export interface EquosBubbleTriggerProps {
+  id?: string;
   initiallyExpanded?: boolean;
   dark?: boolean;
   windowSizeInPixels?: number;
@@ -40,6 +42,7 @@ export const EquosBubbleTrigger = forwardRef<
 >(
   (
     {
+      id,
       initiallyExpanded = true,
       dark = false,
       windowSizeInPixels = 512,
@@ -49,6 +52,8 @@ export const EquosBubbleTrigger = forwardRef<
     },
     ref,
   ) => {
+    const idRef = useRef(id || crypto.randomUUID());
+
     const equos = useMemo(() => getEquosBrowser(), []);
 
     const [registered, setRegistered] = useState<boolean>(false);
@@ -70,54 +75,142 @@ export const EquosBubbleTrigger = forwardRef<
 
     const triggerRef = useRef<HTMLDivElement>(null);
 
-    const onStart = async (
-      agent: EquosBrowserConversationTriggerConfig,
-    ): Promise<EquosBrowserSession> => {
-      return equos.sessions
+    const start = async (): Promise<void> => {
+      if (session) {
+        console.warn(`Session ${session.session.id} already running...`);
+        toggleExpanded(false);
+        return;
+      }
+
+      if (starting) {
+        console.warn('A session is starting...');
+        toggleExpanded(false);
+        return;
+      }
+
+      setStarting(true);
+
+      const res = await equos.sessions
         .start({
-          name: `Chat with ${equos.profile.name} - ${new Date().toISOString()}`,
           agent: { id: agent.agentId },
           avatar: { id: agent.avatarId },
-          maxDuration: agent.maxDuration,
           client: equos.profile.client,
           consumerIdentity: {
             identity: equos.profile.identity,
             name: equos.profile.name,
           },
+          maxDuration: agent.maxDuration,
+          name: `Chat with ${equos.profile.name} - ${new Date().toISOString()}`,
         })
-        .then((res) => {
-          setSession(res);
-          return res.session;
+        .catch((e) => {
+          equos._outward.dispatchEvent(
+            new CustomEvent(EquosBrowserEvent.error, {
+              detail: { agent, error: e },
+            }),
+          );
+
+          return null;
         });
+
+      if (res) {
+        setSession(res);
+        equos._outward.dispatchEvent(
+          new CustomEvent(EquosBrowserEvent.started, { detail: res }),
+        );
+      }
+
+      setTimeout(() => {
+        setStarting(false);
+      }, 1000);
     };
 
-    const onStop = async (): Promise<EquosBrowserSession> => {
+    const stop = async (): Promise<void> => {
       if (!session?.session.id) {
-        throw new Error('No active session to stop.');
+        console.warn(`No session to stop...`);
+        return;
       }
-      return equos.sessions.stop(session?.session.id);
+
+      const res = await equos.sessions.stop(session?.session.id).catch((e) => {
+        equos._outward.dispatchEvent(
+          new CustomEvent(EquosBrowserEvent.error, {
+            detail: { error: e },
+          }),
+        );
+
+        return null;
+      });
+
+      if (res) {
+        equos._outward.dispatchEvent(
+          new CustomEvent(EquosBrowserEvent.ended, { detail: session }),
+        );
+        setSession(null);
+      }
     };
 
     const toggleExpanded = (newExpanded: boolean) => {
       setExpanded(newExpanded);
+
       if (onToggle) {
         onToggle(newExpanded);
       }
     };
 
+    // Register trigger on mount
     useEffect(() => {
       if (!registered) {
-        equos.registerTrigger({
-          id: `${agent.agentId}-${agent.avatarId}`,
-          agent: agent,
-          start: () => onStart(agent),
-          stop: () => onStop(),
-        });
-
+        equos._registerTrigger(idRef.current, agent);
         setRegistered(true);
       }
+
+      return () => {
+        equos._unregisterTrigger(idRef.current);
+        setRegistered(false);
+      };
     }, []);
 
+    // listen to sdk events
+    useEffect(() => {
+      const id = agent.agentId + agent.avatarId;
+
+      const onStartEvent = (event: Event) => {
+        const customEvent = event as CustomEvent;
+
+        if (customEvent.detail === id) {
+          start();
+        }
+      };
+
+      const onStopEvent = (event: Event) => {
+        const customEvent = event as CustomEvent;
+
+        if (customEvent.detail === id) {
+          stop();
+        }
+      };
+
+      equos._inward.addEventListener(
+        EquosBrowserControlEvent.start,
+        onStartEvent,
+      );
+      equos._inward.addEventListener(
+        EquosBrowserControlEvent.stop,
+        onStopEvent,
+      );
+
+      return () => {
+        equos._inward.removeEventListener(
+          EquosBrowserControlEvent.start,
+          onStartEvent,
+        );
+        equos._inward.removeEventListener(
+          EquosBrowserControlEvent.stop,
+          onStopEvent,
+        );
+      };
+    });
+
+    // Cmpute position of conversation window
     useEffect(() => {
       const elt = triggerRef.current;
 
@@ -270,50 +363,7 @@ export const EquosBubbleTrigger = forwardRef<
         return;
       }
 
-      if (session) {
-        console.warn(`Session ${session.session.id} already running...`);
-        toggleExpanded(false);
-        return;
-      }
-
-      if (starting) {
-        console.warn('A session is starting...');
-        toggleExpanded(false);
-        return;
-      }
-
-      setStarting(true);
-
-      let res = null;
-      let tries = 0;
-
-      while (!res && tries < 3) {
-        res = await equos.sessions
-          .start({
-            agent: { id: agent.agentId },
-            avatar: { id: agent.avatarId },
-            client: equos.profile.client,
-            consumerIdentity: {
-              identity: equos.profile.identity,
-              name: equos.profile.name,
-            },
-            maxDuration: agent.maxDuration,
-            name: `Chat with ${equos.profile.name} - ${new Date().toISOString()}`,
-          })
-          .catch((e) => {
-            console.error('Error starting session:', e);
-            return null;
-          });
-        tries++;
-      }
-
-      if (res) {
-        setSession(res);
-      }
-
-      setTimeout(() => {
-        setStarting(false);
-      }, 1000);
+      await start();
     };
 
     const onHangUp = async () => {

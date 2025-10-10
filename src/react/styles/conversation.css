@@ -5,7 +5,7 @@
     align-items: center;
 
     width: var(--equos-conversation-size, 512px);
-    max-width: var(--equos-conversation-max-width, 95vw);
+    max-width: min(var(--equos-conversation-max-width, 95vw), 100%);
     aspect-ratio: 1 / 1;
 
     z-index: 1;
