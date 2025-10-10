@@ -1,0 +1,18 @@
+@import './styles/reset.css';
+@import './styles/base.css';
+
+/* Layout components style */
+@import './styles/bubble-list.css';
+@import './styles/popup.css';
+
+/* Standalone components */
+@import './styles/logo.css';
+@import './styles/powered-by.css';
+
+/* Trigger components */
+@import './styles/placeholder-trigger.css';
+@import './styles/bubble-trigger.css';
+
+/* Live conversation styles */
+@import './styles/conversation.css';
+@import './styles/room-renderer.css'
