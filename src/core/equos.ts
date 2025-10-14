@@ -118,37 +118,33 @@ class EquosBrowser {
     return this._outward.removeEventListener(event, callback, options);
   }
 
-  start(config: EquosBrowserConversationTriggerConfig): boolean {
-    const id = config.agentId + config.avatarId;
-
-    if (!this._triggers.has(id)) {
+  start(triggerId: string): boolean {
+    if (!this._triggers.has(triggerId)) {
       this._outward.dispatchEvent(
         new CustomEvent(EquosBrowserEvent.error, {
-          detail: `[CANNOT_START] Trigger with agent ${config.agentId} & avatar ${config.avatarId} not found.`,
+          detail: `[CANNOT_START] Trigger with id ${triggerId} not found.`,
         }),
       );
       return;
     }
 
     return this._inward.dispatchEvent(
-      new CustomEvent(EquosBrowserControlEvent.start, { detail: id }),
+      new CustomEvent(EquosBrowserControlEvent.start, { detail: triggerId }),
     );
   }
 
-  stop(config: EquosBrowserConversationTriggerConfig): boolean {
-    const id = config.agentId + config.avatarId;
-
-    if (!this._triggers.has(id)) {
+  stop(triggerId: string): boolean {
+    if (!this._triggers.has(triggerId)) {
       this._outward.dispatchEvent(
         new CustomEvent(EquosBrowserEvent.error, {
-          detail: `[CANNOT_STOP] Trigger with agent ${config.agentId} & avatar ${config.avatarId} not found.`,
+          detail: `[CANNOT_STOP] Trigger with id ${triggerId} not found.`,
         }),
       );
       return;
     }
 
     return this._inward.dispatchEvent(
-      new CustomEvent(EquosBrowserControlEvent.stop, { detail: id }),
+      new CustomEvent(EquosBrowserControlEvent.stop, { detail: triggerId }),
     );
   }
 }
