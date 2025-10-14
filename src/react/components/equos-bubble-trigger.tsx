@@ -170,12 +170,10 @@ export const EquosBubbleTrigger = forwardRef<
 
     // listen to sdk events
     useEffect(() => {
-      const id = agent.agentId + agent.avatarId;
-
       const onStartEvent = (event: Event) => {
         const customEvent = event as CustomEvent;
 
-        if (customEvent.detail === id) {
+        if (customEvent.detail === idRef.current) {
           start();
         }
       };
@@ -183,7 +181,7 @@ export const EquosBubbleTrigger = forwardRef<
       const onStopEvent = (event: Event) => {
         const customEvent = event as CustomEvent;
 
-        if (customEvent.detail === id) {
+        if (customEvent.detail === idRef.current) {
           stop();
         }
       };
