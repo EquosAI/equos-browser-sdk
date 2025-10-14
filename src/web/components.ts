@@ -6,7 +6,7 @@ import {
   EquosPlaceholderTrigger,
   EquosBubbleTrigger,
   EquosPoweredBy,
-} from '../react';
+} from '@equos/browser-sdk/react';
 
 // Define Powered By Web Component
 const EquosPoweredByWebComponent = r2wc(EquosPoweredBy, {
