@@ -1,6 +1,9 @@
 // Import styles here so they are bundled.
 import './styles.css';
 
+// Misc Components
+export * from './components/equos-powered-by';
+
 // Session Triggers
 export * from './components/equos-bubble-trigger';
 export * from './components/equos-placeholder-trigger';

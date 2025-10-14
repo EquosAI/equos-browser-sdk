@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "paths": {
       "@equos/browser-sdk": ["src/core"],
-      "@equos/browser-sdk/react": ["src/react"]
+      "@equos/browser-sdk/react": ["src/react"],
+      "@equos/browser-sdk/web": ["src/web"],
+      "@equos/browser-sdk/embed": ["src/embed"],
     },
     "declaration": true,
     "emitDeclarationOnly": false,

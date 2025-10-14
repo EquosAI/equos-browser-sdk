@@ -17,20 +17,18 @@ export default defineConfig({
     lib: {
       entry: {
         index: path.resolve(__dirname, 'src/core/index.ts'),
-        react: path.resolve(__dirname, 'src/react/index.ts'),
       },
-      name: 'EquosBrowserSDK',
-      formats: ['es', 'cjs'],
+      name: 'EquosBrowserCoreSDK',
+      formats: ['es'],
+    },
+    minify: 'terser',
+    terserOptions: {
+      format: { comments: false },
+      compress: { drop_console: true, drop_debugger: true },
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        'livekit-client',
-        '@livekit/components-react',
-        '@livekit/components-styles',
-        'lucide-react',
-      ],
+      treeshake: true,
+      external: [],
       output: {
         dir: 'dist',
         entryFileNames: '[name].[format].js',
@@ -39,7 +37,8 @@ export default defineConfig({
         preserveModules: false,
       },
     },
-    sourcemap: true,
-    emptyOutDir: true,
+    sourcemap: false,
+    emptyOutDir: false,
+    outDir: 'dist/core',
   },
 });
