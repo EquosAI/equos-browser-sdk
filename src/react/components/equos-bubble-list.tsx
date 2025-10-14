@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react';
-import { EquosBrowserConversationTriggerConfig } from '../../core/types/equos.types';
+import { EquosBrowserConversationTriggerConfig } from '@equos/browser-sdk';
 
 import {
   EquosBubbleTrigger,

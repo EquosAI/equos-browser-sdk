@@ -1,15 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { getEquosBrowser } from '../../core/equos';
 import {
+  getEquosBrowser,
+  CopyUtils,
   EquosBrowserControlEvent,
   EquosBrowserConversationTriggerConfig,
   EquosBrowserEvent,
   EquosLocale,
-} from '../../core/types/equos.types';
-import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
+  CreateEquosBrowserSessionResponse,
+} from '@equos/browser-sdk';
 import { EquosConversation } from './equos-conversation';
-
-import { CopyUtils } from '../../core/utils/copy.utils';
 
 export function EquosPlaceholderTrigger({
   agent,

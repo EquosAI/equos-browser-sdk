@@ -7,10 +7,12 @@ import {
 } from '@livekit/components-react';
 import { Track, TrackPublication } from 'livekit-client';
 import { useEffect, useMemo, useState } from 'react';
-import { getEquosBrowser } from '../../core/equos';
-import { CopyUtils } from '../../core/utils/copy.utils';
-import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
-import { EquosLocale } from '../../core/types/equos.types';
+import {
+  getEquosBrowser,
+  CopyUtils,
+  EquosLocale,
+  CreateEquosBrowserSessionResponse,
+} from '@equos/browser-sdk';
 import { Loader2, Mic, MicOff, PhoneMissed } from 'lucide-react';
 
 export function EquosRoomRenderer({

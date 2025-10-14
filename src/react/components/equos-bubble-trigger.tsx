@@ -6,19 +6,20 @@ import {
   useRef,
   useState,
 } from 'react';
-import { getEquosBrowser } from '../../core/equos';
+
+import { UserCircle } from 'lucide-react';
+
 import {
+  getEquosBrowser,
   EquosBrowserControlEvent,
   EquosBrowserConversationTriggerConfig,
   EquosBrowserEvent,
   EquosLocale,
-} from '../../core/types/equos.types';
-import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
+  CreateEquosBrowserSessionResponse,
+  CopyUtils,
+} from '@equos/browser-sdk';
+
 import { EquosConversation } from './equos-conversation';
-
-import { CopyUtils } from '../../core/utils/copy.utils';
-
-import { UserCircle } from 'lucide-react';
 
 export type EquosBubbleTriggerHandle = {
   toggle: (expanded: boolean) => void;

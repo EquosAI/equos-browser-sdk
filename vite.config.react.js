@@ -31,9 +31,10 @@ export default defineConfig({
         'react',
         'react-dom',
         'livekit-client',
+        'lucide-react',
         '@livekit/components-react',
         '@livekit/components-styles',
-        'lucide-react',
+        '@equos/browser-sdk',
       ],
       output: {
         dir: 'dist',

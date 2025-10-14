@@ -1,4 +1,4 @@
-import { CreateEquosBrowserSessionResponse } from '../../core/types/session.types';
+import { CreateEquosBrowserSessionResponse } from '@equos/browser-sdk';
 
 import { LiveKitRoom } from '@livekit/components-react';
 
