@@ -46,6 +46,6 @@ export default defineConfig({
     },
     sourcemap: false,
     emptyOutDir: false,
-    outDir: 'dist/web',
+    outDir: 'dist',
   },
 });

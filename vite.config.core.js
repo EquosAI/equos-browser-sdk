@@ -39,6 +39,6 @@ export default defineConfig({
     },
     sourcemap: false,
     emptyOutDir: false,
-    outDir: 'dist/core',
+    outDir: 'dist',
   },
 });

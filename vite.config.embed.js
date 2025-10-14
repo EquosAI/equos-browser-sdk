@@ -45,6 +45,6 @@ export default defineConfig({
     },
     sourcemap: false,
     emptyOutDir: false,
-    outDir: 'dist/embed',
+    outDir: 'dist',
   },
 });
