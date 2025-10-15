@@ -1,4 +1,4 @@
-import { EquosBrowserConversationTriggerConfig } from '../core/types/equos.types';
+import { EquosBrowserConversationTriggerConfig } from '@equos/browser-sdk';
 
 export type EquosBrowserPlaceholderConfig = {
   selector: string;

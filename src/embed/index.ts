@@ -1,11 +1,11 @@
-import { initEquosBrowser } from '../core/equos';
-import { EncodeUtils } from '../core/utils/encode.utils';
+import { initEquosBrowser, EncodeUtils } from '@equos/browser-sdk';
+
+// Register web components.
+import '../web';
 
 import { injectStyles } from './inject-styles';
 import { EquosBrowserPlaceholderConfig } from './types';
 
-// Register web components.
-import '../web';
 import { injectPlaceholders } from './inject-placeholders';
 import { injectBubbles } from './inject-bubbles';
 

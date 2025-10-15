@@ -26,7 +26,7 @@ export default defineConfig({
     },
     rollupOptions: {
       treeshake: true,
-      external: [],
+      external: ['@equos/browser-sdk'],
       output: {
         dir: 'dist',
         entryFileNames: '[name].[format].js',
