@@ -1,6 +1,8 @@
 // Import styles here so they are bundled.
 import './styles.css';
 
+export * from './components/equos-logo';
+
 // Misc Components
 export * from './components/equos-powered-by';
 
