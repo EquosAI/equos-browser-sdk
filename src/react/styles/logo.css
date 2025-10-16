@@ -8,6 +8,6 @@
 }
 
 .equos-logo.equos-pulse {
-    animation: pulse 1.5s infinite;
+    animation: equos-pulse 1.5s infinite;
 }
 

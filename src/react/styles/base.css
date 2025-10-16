@@ -11,10 +11,10 @@
 }
 
 .equos-spinner {
-    animation: spin 750ms linear infinite;
+    animation: equos-spin 750ms linear infinite;
 }
 
-@keyframes spin {
+@keyframes equos-spin {
     0% {
         transform: rotate(0deg);
     }
@@ -23,7 +23,7 @@
     }
 }
 
-@keyframes pulse {
+@keyframes equos-pulse {
     0% {
         box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7);
         opacity: 1;
