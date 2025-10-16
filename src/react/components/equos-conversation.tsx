@@ -6,7 +6,7 @@ import { EquosRoomRenderer } from './equos-room-renderer';
 
 import '@livekit/components-styles';
 import { useMemo } from 'react';
-import EquosLogo from './equos-logo';
+import { EquosLogo } from './equos-logo';
 
 export function EquosConversation({
   allowAudio = true,
