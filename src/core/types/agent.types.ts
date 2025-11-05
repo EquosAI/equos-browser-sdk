@@ -30,6 +30,28 @@ export enum GeminiRealtimeVoices {
   Leda = 'Leda',
   Orus = 'Orus',
   Zephyr = 'Zephyr',
+  Sulafat = 'Sulafat',
+  Sadachbia = 'Sadachbia',
+  Sadaltager = 'Sadaltager',
+  Vindemiatrix = 'Vindemiatrix',
+  Zubenelgenubi = 'Zubenelgenubi',
+  Achird = 'Achird',
+  Pulcherrima = 'Pulcherrima',
+  Gacrux = 'Gacrux',
+  Schedar = 'Schedar',
+  Alnilam = 'Alnilam',
+  Achernar = 'Achernar',
+  Laomedeia = 'Laomedeia',
+  Rasalgethi = 'Rasalgethi',
+  Algenib = 'Algenib',
+  Erinome = 'Erinome',
+  Despina = 'Despina',
+  Algieba = 'Algieba',
+  Umbriel = 'Umbriel',
+  Iapetus = 'Iapetus',
+  Enceladus = 'Enceladus',
+  Autonoe = 'Autonoe',
+  Callirrhoe = 'Callirrhoe',
 }
 
 export enum AgentProvider {
@@ -38,29 +60,23 @@ export enum AgentProvider {
   elevenlabs = 'elevenlabs',
 }
 
-export interface OpenaiAgentConfig {
-  instructions: string;
-  model: OpenaiRealtimeModels;
-  voice: OpenaiRealtimeVoices;
-}
-
-export interface GeminiAgentConfig {
-  instructions: string;
-  model: GeminiRealtimeModels;
-  voice: GeminiRealtimeVoices;
-}
-
-export interface ElevenlabsAgentConfig {
-  elevenlabsAgentId: string;
-}
-
 export interface EquosBrowserAgent {
   id: string;
   organizationId: string;
   provider: AgentProvider;
   name?: string;
   client?: string;
-  config: OpenaiAgentConfig | GeminiAgentConfig | ElevenlabsAgentConfig;
+
+  model?: GeminiRealtimeModels | OpenaiRealtimeModels;
+  voice?: GeminiRealtimeVoices | OpenaiRealtimeVoices;
+  instructions?: string;
+
+  remoteId?: string;
+
+  search: boolean;
+  emotions: boolean;
+  memory: boolean;
+
   createdAt: Date;
   updatedAt: Date;
 }
