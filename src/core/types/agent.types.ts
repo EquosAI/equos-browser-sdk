@@ -17,8 +17,7 @@ export enum OpenaiRealtimeVoices {
 }
 
 export enum GeminiRealtimeModels {
-  gemini_2_5_flash_exp = 'gemini-2.5-flash-exp-native-audio-thinking-dialog',
-  gemini_2_0_flash_exp = 'gemini-2.0-flash-exp',
+  gemini_2_5_flash_native_audio_09_2025 = 'gemini-2.5-flash-native-audio-preview-09-2025',
 }
 
 export enum GeminiRealtimeVoices {
