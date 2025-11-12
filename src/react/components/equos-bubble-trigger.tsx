@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 
-import { UserCircle } from 'lucide-react';
+import { Phone } from 'lucide-react';
 
 import {
   getEquosBrowser,
@@ -62,6 +62,22 @@ export const EquosBubbleTrigger = forwardRef<
 
     const [session, setSession] =
       useState<CreateEquosBrowserSessionResponse | null>(null);
+
+    const thumbnailUrlRef = useRef<string | null>(null);
+    const thumbnailUrl = useMemo(() => {
+      const currentThumbnail = thumbnailUrlRef.current;
+      const newThumbnail =
+        agent.thumbnailUrl ||
+        session?.session.avatar.thumbnailUrl ||
+        currentThumbnail ||
+        null;
+
+      if (newThumbnail && newThumbnail !== currentThumbnail) {
+        thumbnailUrlRef.current = newThumbnail;
+      }
+
+      return newThumbnail;
+    }, [agent, session]);
 
     const [conversationLeft, setConversationLeft] = useState<number>(0);
     const [conversationTop, setConversationTop] = useState<number>(0);
@@ -375,16 +391,20 @@ export const EquosBubbleTrigger = forwardRef<
           className={containerClasses}
           onClick={() => onClickBubble()}
         >
-          {agent.thumbnailUrl && (
+          {thumbnailUrl && (
             <img
               key={agent.agentId + agent.avatarId}
-              src={agent.thumbnailUrl}
+              src={thumbnailUrl}
               alt={agent.name}
               title={agent.name}
             />
           )}
 
-          {!agent.thumbnailUrl && <UserCircle size={48} />}
+          {!thumbnailUrl && (
+            <div className="equos-bubble-trigger-button-icon">
+              <Phone size={20} />
+            </div>
+          )}
 
           <div
             className={
@@ -413,6 +433,8 @@ export const EquosBubbleTrigger = forwardRef<
               windowSizeInPixels={windowSizeInPixels}
               windowMaxViewportWidthPercent={windowMaxViewportWidthPercent}
               allowAudio={agent.allowAudio}
+              allowScreenShare={agent.allowScreenShare}
+              allowVideo={agent.allowVideo}
               onHangUp={onHangUp}
             />
           </aside>

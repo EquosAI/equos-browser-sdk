@@ -237,6 +237,8 @@ export function EquosPlaceholderTrigger({
             windowSizeInPixels={windowSizeInPixels}
             windowMaxViewportWidthPercent={windowMaxViewportWidthPercent}
             allowAudio={agent.allowAudio}
+            allowVideo={agent.allowVideo}
+            allowScreenShare={agent.allowScreenShare}
             onHangUp={onHangUp}
           />
         </aside>

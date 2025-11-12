@@ -10,12 +10,16 @@ import { EquosLogo } from './equos-logo';
 
 export function EquosConversation({
   allowAudio = true,
+  allowVideo = true,
+  allowScreenShare = false,
   windowSizeInPixels = 512,
   windowMaxViewportWidthPercent = 95,
   session,
   onHangUp,
 }: {
   allowAudio?: boolean;
+  allowVideo?: boolean;
+  allowScreenShare?: boolean;
   windowSizeInPixels?: number;
   windowMaxViewportWidthPercent?: number;
   session?: CreateEquosBrowserSessionResponse;
@@ -71,13 +75,13 @@ export function EquosConversation({
               serverUrl={session.session.host.serverUrl}
               token={session.consumerAccessToken}
               audio={allowAudio}
-              video={false}
-              screen={false}
+              video={allowVideo}
+              screen={false} // Start with screen share off, user can enable it later
             >
               <EquosRoomRenderer
                 allowAudio={allowAudio}
-                allowVideo={false}
-                allowScreenShare={false}
+                allowVideo={allowVideo}
+                allowScreenShare={allowScreenShare}
                 session={session}
                 onHangUp={onHangUp}
               />
