@@ -12,6 +12,13 @@ export function EquosConversation({
   allowAudio = true,
   allowVideo = true,
   allowScreenShare = false,
+  allowHangUp = true,
+  showMicBtn = true,
+  showCamBtn = true,
+  showScreenShareBtn = true,
+  showHangUpBtn = true,
+  showTimeLeft = true,
+  allowedRecoveryTimeInSeconds = 3,
   windowSizeInPixels = 512,
   windowMaxViewportWidthPercent = 95,
   session,
@@ -20,6 +27,13 @@ export function EquosConversation({
   allowAudio?: boolean;
   allowVideo?: boolean;
   allowScreenShare?: boolean;
+  allowHangUp?: boolean;
+  showMicBtn?: boolean;
+  showCamBtn?: boolean;
+  showScreenShareBtn?: boolean;
+  showHangUpBtn?: boolean;
+  showTimeLeft?: boolean;
+  allowedRecoveryTimeInSeconds?: number;
   windowSizeInPixels?: number;
   windowMaxViewportWidthPercent?: number;
   session?: CreateEquosBrowserSessionResponse;
@@ -82,6 +96,13 @@ export function EquosConversation({
                 allowAudio={allowAudio}
                 allowVideo={allowVideo}
                 allowScreenShare={allowScreenShare}
+                allowHangUp={allowHangUp}
+                showMicBtn={showMicBtn}
+                showCamBtn={showCamBtn}
+                showScreenShareBtn={showScreenShareBtn}
+                showHangUpBtn={showHangUpBtn}
+                showTimeLeft={showTimeLeft}
+                allowedRecoveryTimeInSeconds={allowedRecoveryTimeInSeconds}
                 session={session}
                 onHangUp={onHangUp}
               />

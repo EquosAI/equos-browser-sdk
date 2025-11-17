@@ -435,6 +435,13 @@ export const EquosBubbleTrigger = forwardRef<
               allowAudio={agent.allowAudio}
               allowScreenShare={agent.allowScreenShare}
               allowVideo={agent.allowVideo}
+              allowHangUp={agent.allowHangUp}
+              showMicBtn={agent.showMicBtn}
+              showCamBtn={agent.showCamBtn}
+              showScreenShareBtn={agent.showScreenShareBtn}
+              showHangUpBtn={agent.showHangUpBtn}
+              showTimeLeft={agent.showTimeLeft}
+              allowedRecoveryTimeInSeconds={agent.allowedRecoveryTimeInSeconds}
               onHangUp={onHangUp}
             />
           </aside>

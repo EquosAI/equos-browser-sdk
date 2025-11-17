@@ -36,6 +36,13 @@ export interface EquosBrowserConversationTriggerConfig {
   allowAudio?: boolean;
   allowVideo?: boolean;
   allowScreenShare?: boolean;
+  allowHangUp?: boolean;
+  showMicBtn?: boolean;
+  showCamBtn?: boolean;
+  showScreenShareBtn?: boolean;
+  showHangUpBtn?: boolean;
+  showTimeLeft?: boolean;
+  allowedRecoveryTimeInSeconds?: number;
 }
 
 export interface EquosUserProfile {

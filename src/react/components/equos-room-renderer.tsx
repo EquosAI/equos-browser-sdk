@@ -30,12 +30,26 @@ export function EquosRoomRenderer({
   allowAudio = true,
   allowVideo = true,
   allowScreenShare = true,
+  allowHangUp = true,
+  showMicBtn = true,
+  showCamBtn = true,
+  showScreenShareBtn = true,
+  showHangUpBtn = true,
+  showTimeLeft = true,
+  allowedRecoveryTimeInSeconds = 3,
   session,
   onHangUp,
 }: {
   allowAudio?: boolean;
   allowVideo?: boolean;
   allowScreenShare?: boolean;
+  allowHangUp?: boolean;
+  showMicBtn?: boolean;
+  showCamBtn?: boolean;
+  showScreenShareBtn?: boolean;
+  showHangUpBtn?: boolean;
+  showTimeLeft?: boolean;
+  allowedRecoveryTimeInSeconds?: number;
   session: CreateEquosBrowserSessionResponse;
   onHangUp: () => Promise<void>;
 }) {
@@ -52,7 +66,9 @@ export function EquosRoomRenderer({
   const [error, setError] = useState<string | null>(null);
 
   const [avatarJoined, setAvatarJoined] = useState(false);
-  const [avatarLeft, setAvatarLeft] = useState(false);
+  const [avatarLeftTimeout, setAvatarLeftTimeout] = useState<number | null>(
+    null,
+  );
 
   const [remainingTime, setRemainingTime] = useState<string | null>(null);
   const [duration, setDuration] = useState(0);
@@ -214,8 +230,12 @@ export function EquosRoomRenderer({
         (p) => p.identity === session.session.avatar.identity,
       );
 
-      if (!avatar) {
-        setAvatarLeft(true);
+      if (!avatar && allowHangUp && !avatarLeftTimeout) {
+        setAvatarLeftTimeout(
+          setTimeout(() => {
+            hangUp();
+          }, allowedRecoveryTimeInSeconds * 1000),
+        );
       }
     } else {
       const avatar = participants.find(
@@ -224,18 +244,22 @@ export function EquosRoomRenderer({
 
       if (avatar) {
         setAvatarJoined(true);
+
+        if (avatarLeftTimeout) {
+          clearTimeout(avatarLeftTimeout);
+        }
       }
     }
+
+    return () => {
+      if (avatarLeftTimeout) {
+        clearTimeout(avatarLeftTimeout);
+      }
+    };
   }, [session.session.avatar.identity, avatarJoined, participants]);
 
-  useEffect(() => {
-    if (avatarLeft) {
-      hangUp();
-    }
-  }, [avatarLeft]);
-
   const hangUp = async () => {
-    if (hangingUp) {
+    if (hangingUp || !allowHangUp) {
       return;
     }
 
@@ -372,7 +396,7 @@ export function EquosRoomRenderer({
       <span className={errorClasses}>{error}</span>
 
       {/* Remaining Time */}
-      {remainingTime && (
+      {remainingTime && showTimeLeft && (
         <span className="equos-room-renderer-countdown">{remainingTime}</span>
       )}
 
@@ -486,7 +510,7 @@ export function EquosRoomRenderer({
 
       {/* Bottom Buttons */}
       <div className="equos-room-renderer-bottom-actions">
-        {allowAudio && (
+        {allowAudio && showMicBtn && (
           <button
             className="equos-room-renderer-button"
             type="button"
@@ -495,18 +519,20 @@ export function EquosRoomRenderer({
             {micToggle.enabled ? <Mic size={18} /> : <MicOff size={18} />}
           </button>
         )}
-        <button
-          type="button"
-          className="equos-room-renderer-hangup"
-          onClick={hangUp}
-        >
-          {hangingUp ? (
-            <Loader2 size={18} className="equos-spinner" />
-          ) : (
-            <PhoneMissed size={18} />
-          )}
-        </button>
-        {allowVideo && (
+        {showHangUpBtn && (
+          <button
+            type="button"
+            className="equos-room-renderer-hangup"
+            onClick={hangUp}
+          >
+            {hangingUp ? (
+              <Loader2 size={18} className="equos-spinner" />
+            ) : (
+              <PhoneMissed size={18} />
+            )}
+          </button>
+        )}
+        {allowVideo && showCamBtn && (
           <button
             className="equos-room-renderer-button"
             type="button"
@@ -516,7 +542,7 @@ export function EquosRoomRenderer({
           </button>
         )}
 
-        {allowScreenShare && (
+        {allowScreenShare && showScreenShareBtn && (
           <button
             className="equos-room-renderer-button"
             type="button"

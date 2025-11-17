@@ -239,6 +239,13 @@ export function EquosPlaceholderTrigger({
             allowAudio={agent.allowAudio}
             allowVideo={agent.allowVideo}
             allowScreenShare={agent.allowScreenShare}
+            allowHangUp={agent.allowHangUp}
+            showMicBtn={agent.showMicBtn}
+            showCamBtn={agent.showCamBtn}
+            showScreenShareBtn={agent.showScreenShareBtn}
+            showHangUpBtn={agent.showHangUpBtn}
+            showTimeLeft={agent.showTimeLeft}
+            allowedRecoveryTimeInSeconds={agent.allowedRecoveryTimeInSeconds}
             onHangUp={onHangUp}
           />
         </aside>
