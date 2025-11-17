@@ -93,14 +93,21 @@ export class CopyUtils {
       .padStart(2, '0');
     const seconds = (remaining % 60).toString().padStart(2, '0');
 
+    const parts = [];
+
     let timeString = '';
+
     if (remaining > 3600) {
-      timeString += `${hours}h`;
-    } else if (remaining > 60) {
-      timeString = `${minutes}m`;
-    } else {
-      timeString = `${seconds}s`;
+      parts.push(`${hours}h`);
     }
+
+    parts.push(`${minutes}m`);
+
+    if (parts.length < 2) {
+      parts.push(`${seconds}s`);
+    }
+
+    timeString = parts.join('');
 
     switch (locale) {
       case EquosLocale.FR:
