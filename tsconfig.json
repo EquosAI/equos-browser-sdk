@@ -1,18 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
+    "module": "ES2020",
     "baseUrl": ".",
-    "paths": {
-      "@equos/browser-sdk": ["src/core"],
-      "@equos/browser-sdk/react": ["src/react"],
-      "@equos/browser-sdk/web": ["src/web"],
-      "@equos/browser-sdk/embed": ["src/embed"],
-    },
     "declaration": true,
     "emitDeclarationOnly": false,
     "outDir": "dist/types",
     "moduleResolution": "node",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["vite/client"]
   },
   "include": ["src"]
 }
