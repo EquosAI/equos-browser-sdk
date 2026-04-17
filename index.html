@@ -3,15 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Equos Example</title>
+  <title>Equos Browser SDK Demo</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 { margin-bottom: 16px; font-size: 1.4rem; }
 
+    /* Status bar */
+    #status {
+      padding: 8px 12px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      background: #222;
+      font-size: 0.85rem;
+      display: flex;
+      gap: 16px;
+    }
+    #status .label { color: #888; }
+    #status .connected { color: #4caf50; }
+    #status .disconnected { color: #f44336; }
+    #status .connecting, #status .reconnecting { color: #ff9800; }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      background: #333;
+      color: #eee;
+    }
+    button:hover { background: #444; }
+    button.primary { background: #1976d2; color: #fff; }
+    button.primary:hover { background: #1565c0; }
+    button.danger { background: #c62828; color: #fff; }
+    button.danger:hover { background: #b71c1c; }
+    button.active { background: #2e7d32; color: #fff; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Video */
+    #agent-video {
+      width: 100%;
+      max-height: 400px;
+      background: #000;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    /* Media controls */
+    #media-controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* Transcript */
+    #transcript {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 12px;
+      height: 200px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .msg { margin-bottom: 6px; }
+    .msg .author { font-weight: 600; }
+    .msg .author.agent { color: #64b5f6; }
+    .msg .author.user { color: #81c784; }
+    .msg .time { color: #666; font-size: 0.75rem; margin-left: 8px; }
+    .msg.system { color: #ff9800; font-style: italic; }
+    .msg.error { color: #f44336; }
+
+    /* Text input */
+    #text-form, #context-form {
+      display: flex;
+      gap: 8px;
+    }
+    #text-input {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #1a1a1a;
+      color: #eee;
+      font-size: 0.9rem;
+    }
+
+    /* Warning banner */
+    #expire-warning {
+      display: none;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      background: #e65100;
+      color: #fff;
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
-  <h1>Equos Browser SDK Example</h1>
-</section>
+  <h1>Equos Browser SDK Demo</h1>
+
+  <div id="status">
+    <span><span class="label">Connection:</span> <span id="conn-state" class="disconnected">disconnected</span></span>
+    <span><span class="label">Agent:</span> <span id="agent-state">-</span></span>
+  </div>
+
+  <div class="btn-row">
+    <button id="connect-btn" class="primary">Connect</button>
+    <button id="disconnect-btn" class="danger" disabled>Disconnect</button>
+  </div>
+
+  <video id="agent-video" autoplay playsinline></video>
+
+  <div id="media-controls">
+    <button id="mic-btn" disabled>Mic: OFF</button>
+    <button id="camera-btn" disabled>Camera: OFF</button>
+    <button id="screen-btn" disabled>Screen: OFF</button>
+  </div>
+
+  <div id="expire-warning"></div>
+
+  <div id="transcript"></div>
+
+  <form id="text-form">
+    <input type="text" id="text-input" placeholder="Type a message..." disabled />
+    <button type="submit" id="send-btn" class="primary" disabled>Send</button>
+  </form>
+
+  <form id="context-form" style="margin-top: 8px;">
+    <input type="text" id="context-input" placeholder="Add context..." disabled style="flex:1; padding:8px 10px; border:1px solid #333; border-radius:4px; background:#1a1a1a; color:#eee; font-size:0.9rem;" />
+    <button type="submit" id="context-btn" disabled>Send Context</button>
+  </form>
+
   <script type="module" src="/src/example.ts"></script>
 </body>
 </html>
