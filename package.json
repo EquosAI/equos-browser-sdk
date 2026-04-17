@@ -2,7 +2,21 @@
   "name": "@equos/browser-sdk",
   "version": "3.0.2",
   "description": "Equos browser sdk",
-  "keywords": [],
+  "keywords": [
+    "ai",
+    "sdk",
+    "equos",
+    "equos.ai",
+    "browser",
+    "livekit",
+    "webrtc",
+    "realtime",
+    "agent",
+    "avatar",
+    "conversational-ai",
+    "conversation",
+    "live"
+  ],
   "homepage": "https://github.com/EquosAI/equos-browser-sdk#readme",
   "bugs": {
     "url": "https://github.com/EquosAI/equos-browser-sdk/issues"
