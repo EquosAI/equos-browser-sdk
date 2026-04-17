@@ -1,5 +1,5 @@
 import { EquosClient } from '@equos/node-sdk';
-import { EquosConversation } from './index';
+import { EquosConversation, EquosMode } from './index';
 
 // --- Config from .env ---
 
@@ -27,9 +27,24 @@ const contextInput = document.getElementById(
 ) as HTMLInputElement;
 const contextBtn = document.getElementById('context-btn') as HTMLButtonElement;
 const contextForm = document.getElementById('context-form') as HTMLFormElement;
+const modeTextBtn = document.getElementById(
+  'mode-text-btn',
+) as HTMLButtonElement;
+const modeAudioBtn = document.getElementById(
+  'mode-audio-btn',
+) as HTMLButtonElement;
+const modeVideoBtn = document.getElementById(
+  'mode-video-btn',
+) as HTMLButtonElement;
 const expireWarning = document.getElementById(
   'expire-warning',
 ) as HTMLDivElement;
+
+const modeBtns = {
+  [EquosMode.Text]: modeTextBtn,
+  [EquosMode.Audio]: modeAudioBtn,
+  [EquosMode.Video]: modeVideoBtn,
+};
 
 // --- State ---
 
@@ -81,6 +96,9 @@ function setControlsEnabled(enabled: boolean) {
   sendBtn.disabled = !enabled;
   contextInput.disabled = !enabled;
   contextBtn.disabled = !enabled;
+  modeTextBtn.disabled = !enabled;
+  modeAudioBtn.disabled = !enabled;
+  modeVideoBtn.disabled = !enabled;
   connectBtn.disabled = enabled;
 }
 
@@ -91,6 +109,12 @@ function updateMediaButton(
 ) {
   btn.textContent = `${label}: ${enabled ? 'ON' : 'OFF'}`;
   btn.className = enabled ? 'active' : '';
+}
+
+function updateModeButtons(active: string) {
+  for (const [mode, btn] of Object.entries(modeBtns)) {
+    btn.className = mode === active ? 'active' : '';
+  }
 }
 
 // --- Connect ---
@@ -260,3 +284,13 @@ screenBtn.addEventListener('click', async () => {
   await conversation.setScreenShareEnabled(screenEnabled);
   updateMediaButton(screenBtn, 'Screen', screenEnabled);
 });
+
+// --- Mode switches ---
+
+for (const [mode, btn] of Object.entries(modeBtns)) {
+  btn.addEventListener('click', () => {
+    if (!conversation) return;
+    conversation.setMode(mode as typeof EquosMode[keyof typeof EquosMode]);
+    updateModeButtons(mode);
+  });
+}

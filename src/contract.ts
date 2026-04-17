@@ -31,7 +31,15 @@ export const EquosEvent = {
   ConnectionStateChanged: 'connectionStateChanged',
   AgentConnected: 'agentConnected',
   AgentDisconnected: 'agentDisconnected',
+  ModeChanged: 'modeChanged',
   DataReceived: 'dataReceived',
+} as const;
+
+/** Conversation modes controlling which agent media is played. */
+export const EquosMode = {
+  Text: 'text',
+  Audio: 'audio',
+  Video: 'video',
 } as const;
 
 /** Connection states exposed by the SDK. */

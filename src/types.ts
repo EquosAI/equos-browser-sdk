@@ -3,6 +3,7 @@ import type {
   EquosEvent as EventObj,
   EquosInboundMessageType as InboundObj,
   EquosOutboundMessageType as OutboundObj,
+  EquosMode as ModeObj,
 } from './contract';
 
 // --- Configuration ---
@@ -20,6 +21,8 @@ export interface EquosConversationOptions {
   config: EquosConversationConfig;
   /** If true, automatically enable mic on connect. Default: true */
   autoPublishMic?: boolean;
+  /** Conversation mode. Default: 'video' */
+  mode?: EquosMode;
 }
 
 // --- Inbound messages (SDK -> agent) ---
@@ -74,6 +77,10 @@ export type EquosOutboundMessage =
 export type EquosConnectionState =
   (typeof ConnectionStateObj)[keyof typeof ConnectionStateObj];
 
+// --- Mode ---
+
+export type EquosMode = (typeof ModeObj)[keyof typeof ModeObj];
+
 // --- Event map ---
 
 export interface EquosEventMap {
@@ -84,5 +91,6 @@ export interface EquosEventMap {
   [EventObj.ConnectionStateChanged]: (state: EquosConnectionState) => void;
   [EventObj.AgentConnected]: () => void;
   [EventObj.AgentDisconnected]: () => void;
+  [EventObj.ModeChanged]: (mode: EquosMode) => void;
   [EventObj.DataReceived]: (msg: EquosOutboundMessage) => void;
 }

@@ -12,6 +12,7 @@ import type {
   EquosEventMap,
   EquosConnectionState,
   EquosOutboundMessage,
+  EquosMode,
 } from './types';
 import {
   EquosDataTopic,
@@ -19,6 +20,7 @@ import {
   EquosOutboundMessageType,
   EquosEvent,
   EquosConnectionState as ConnectionStates,
+  EquosMode as Modes,
 } from './contract';
 
 const encoder = new TextEncoder();
@@ -27,6 +29,7 @@ const decoder = new TextDecoder();
 export class EquosConversation {
   private readonly config: EquosConversationConfig;
   private readonly autoPublishMic: boolean;
+  private currentMode: EquosMode;
   private room: Room | null = null;
   private connectionState: EquosConnectionState = ConnectionStates.Disconnected;
   private attachedElements = new Set<HTMLMediaElement>();
@@ -38,6 +41,7 @@ export class EquosConversation {
   constructor(options: EquosConversationOptions) {
     this.config = options.config;
     this.autoPublishMic = options.autoPublishMic ?? true;
+    this.currentMode = options.mode ?? Modes.Video;
   }
 
   // --- Event emitter ---
@@ -128,6 +132,40 @@ export class EquosConversation {
     this.setConnectionState(ConnectionStates.Disconnected);
   }
 
+  // --- Mode ---
+
+  get mode(): EquosMode {
+    return this.currentMode;
+  }
+
+  setMode(mode: EquosMode): void {
+    if (this.currentMode === mode) return;
+    const previousMode = this.currentMode;
+    this.currentMode = mode;
+    this.emit(EquosEvent.ModeChanged, mode);
+
+    if (!this.room) return;
+
+    // Re-evaluate which tracks should be attached/detached
+    for (const [, participant] of this.room.remoteParticipants) {
+      if (!this.isAgent(participant)) continue;
+      for (const [, pub] of participant.trackPublications) {
+        if (!pub.track) continue;
+        const wasAllowed = this.isTrackAllowed(pub.track.kind, previousMode);
+        const isAllowed = this.isTrackAllowed(pub.track.kind, mode);
+        if (wasAllowed && !isAllowed) {
+          for (const el of this.attachedElements) {
+            pub.track.detach(el);
+          }
+        } else if (!wasAllowed && isAllowed) {
+          for (const el of this.attachedElements) {
+            pub.track.attach(el);
+          }
+        }
+      }
+    }
+  }
+
   // --- Send methods ---
 
   sendText(text: string): void {
@@ -206,6 +244,13 @@ export class EquosConversation {
     });
   }
 
+  private isTrackAllowed(kind: string, mode?: EquosMode): boolean {
+    const m = mode ?? this.currentMode;
+    if (m === Modes.Text) return false;
+    if (m === Modes.Audio) return kind === 'audio';
+    return true; // Video mode: both audio and video
+  }
+
   private isAgent(participant: RemoteParticipant): boolean {
     // When agentIdentity is not set, treat all remote participants as agents
     if (!this.config.agentIdentity) return true;
@@ -214,7 +259,7 @@ export class EquosConversation {
 
   private attachAgentTracks(participant: RemoteParticipant): void {
     for (const [, pub] of participant.trackPublications) {
-      if (pub.track) {
+      if (pub.track && this.isTrackAllowed(pub.track.kind)) {
         for (const el of this.attachedElements) {
           pub.track.attach(el);
         }
@@ -329,7 +374,7 @@ export class EquosConversation {
           `isAgent=${this.isAgent(participant)}`,
           `attachedElements=${this.attachedElements.size}`,
         );
-        if (this.isAgent(participant)) {
+        if (this.isAgent(participant) && this.isTrackAllowed(track.kind)) {
           for (const el of this.attachedElements) {
             track.attach(el);
           }

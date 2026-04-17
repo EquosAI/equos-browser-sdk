@@ -2,6 +2,7 @@ export { EquosConversation } from './conversation';
 export {
   EquosEvent,
   EquosConnectionState,
+  EquosMode,
   EquosInboundMessageType,
   EquosOutboundMessageType,
 } from './contract';
@@ -10,6 +11,7 @@ export type {
   EquosConversationOptions,
   EquosEventMap,
   EquosConnectionState as EquosConnectionStateType,
+  EquosMode as EquosModeType,
   EquosUtterance,
   EquosUtteranceMessage,
   EquosInterruptMessage,
