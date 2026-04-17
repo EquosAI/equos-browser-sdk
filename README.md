@@ -2,8 +2,6 @@
 
 [Equos.ai](https://www.equos.ai) official Browser SDK for real-time conversations with Equos AI agents.
 
-Wraps [livekit-client](https://www.npmjs.com/package/livekit-client) into a simple, typed, event-driven API.
-
 ## Prerequisites
 
 - Go to [Equos Studio](https://studio.equos.ai).
