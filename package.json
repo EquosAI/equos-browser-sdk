@@ -53,7 +53,7 @@
     "livekit-client": "^2.13.0"
   },
   "devDependencies": {
-    "@equos/node-sdk": "^3.1.1-rc.1",
+    "@equos/node-sdk": "^3.1.2",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
     "eslint": "^9.36.0",
