@@ -14,6 +14,7 @@ export const EquosInboundMessageType = {
 export const EquosOutboundMessageType = {
   Interrupt: 'interrupt',
   Utterance: 'utterance',
+  Trigger: 'trigger',
   ExpireSoon: 'expire_soon',
   Error: 'error',
 } as const;
@@ -25,6 +26,7 @@ export const EquosOutboundMessageType = {
 /** Events emitted by EquosConversation. */
 export const EquosEvent = {
   Utterance: 'utterance',
+  Trigger: 'trigger',
   Interrupt: 'interrupt',
   ExpireSoon: 'expire_soon',
   Error: 'error',

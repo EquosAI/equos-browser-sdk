@@ -49,11 +49,18 @@ export interface EquosUtterance {
   author: 'agent' | 'user';
   content: string;
   recordedAt: string;
+  finished: boolean;
 }
 
 export interface EquosUtteranceMessage {
   type: typeof OutboundObj.Utterance;
   utterance: EquosUtterance;
+}
+
+export interface EquosTriggerMessage {
+  type: typeof OutboundObj.Trigger;
+  name: string;
+  params: Record<string, unknown>;
 }
 
 export interface EquosExpireSoonMessage {
@@ -69,6 +76,7 @@ export interface EquosErrorMessage {
 export type EquosOutboundMessage =
   | EquosInterruptMessage
   | EquosUtteranceMessage
+  | EquosTriggerMessage
   | EquosExpireSoonMessage
   | EquosErrorMessage;
 
@@ -86,6 +94,7 @@ export type EquosMode = (typeof ModeObj)[keyof typeof ModeObj];
 export interface EquosEventMap {
   [EventObj.Utterance]: (msg: EquosUtteranceMessage) => void;
   [EventObj.Interrupt]: (msg: EquosInterruptMessage) => void;
+  [EventObj.Trigger]: (msg: EquosTriggerMessage) => void;
   [EventObj.ExpireSoon]: (msg: EquosExpireSoonMessage) => void;
   [EventObj.Error]: (msg: EquosErrorMessage) => void;
   [EventObj.ConnectionStateChanged]: (state: EquosConnectionState) => void;

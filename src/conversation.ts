@@ -308,6 +308,9 @@ export class EquosConversation {
           case EquosOutboundMessageType.Utterance:
             this.emit(EquosEvent.Utterance, msg);
             break;
+          case EquosOutboundMessageType.Trigger:
+            this.emit(EquosEvent.Trigger, msg);
+            break;
           case EquosOutboundMessageType.Interrupt:
             this.emit(EquosEvent.Interrupt, msg);
             break;
@@ -321,28 +324,24 @@ export class EquosConversation {
       },
     );
 
-    room.on(
-      RoomEvent.ConnectionStateChanged,
-      (state: LKConnectionState) => {
-        switch (state) {
-          case LKConnectionState.Connected:
-            this.setConnectionState(ConnectionStates.Connected);
-            break;
-          case LKConnectionState.Reconnecting:
-            this.setConnectionState(ConnectionStates.Reconnecting);
-            break;
-          case LKConnectionState.Disconnected:
-            this.room = null;
-            this.setConnectionState(ConnectionStates.Disconnected);
-            break;
-        }
-      },
-    );
+    room.on(RoomEvent.ConnectionStateChanged, (state: LKConnectionState) => {
+      switch (state) {
+        case LKConnectionState.Connected:
+          this.setConnectionState(ConnectionStates.Connected);
+          break;
+        case LKConnectionState.Reconnecting:
+          this.setConnectionState(ConnectionStates.Reconnecting);
+          break;
+        case LKConnectionState.Disconnected:
+          this.room = null;
+          this.setConnectionState(ConnectionStates.Disconnected);
+          break;
+      }
+    });
 
     room.on(
       RoomEvent.ParticipantConnected,
       (participant: RemoteParticipant) => {
-        console.log(`[equos:lk] participantConnected`, participant.identity);
         if (this.isAgent(participant)) {
           this.emit(EquosEvent.AgentConnected);
         }
@@ -352,7 +351,6 @@ export class EquosConversation {
     room.on(
       RoomEvent.ParticipantDisconnected,
       (participant: RemoteParticipant) => {
-        console.log(`[equos:lk] participantDisconnected`, participant.identity);
         if (this.isAgent(participant)) {
           this.emit(EquosEvent.AgentDisconnected);
         }
@@ -366,14 +364,6 @@ export class EquosConversation {
         publication: RemoteTrackPublication,
         participant: RemoteParticipant,
       ) => {
-        console.log(
-          `[equos:lk] trackSubscribed`,
-          participant.identity,
-          track.kind,
-          track.source,
-          `isAgent=${this.isAgent(participant)}`,
-          `attachedElements=${this.attachedElements.size}`,
-        );
         if (this.isAgent(participant) && this.isTrackAllowed(track.kind)) {
           for (const el of this.attachedElements) {
             track.attach(el);
@@ -389,11 +379,6 @@ export class EquosConversation {
         publication: RemoteTrackPublication,
         participant: RemoteParticipant,
       ) => {
-        console.log(
-          `[equos:lk] trackUnsubscribed`,
-          participant.identity,
-          track.kind,
-        );
         if (this.isAgent(participant)) {
           for (const el of this.attachedElements) {
             track.detach(el);
